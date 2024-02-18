@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis
+    restart: always
+
+  worker:
+    build:
+      context: .
+    restart: always
+    command: [ 'celery', '-A', 'FileProcessing.celery:app', 'worker']
+
+  flower:
+    build:
+      context: .
+    restart: always
+    command: [ 'celery', '-A', 'FileProcessing.celery:app', 'flower' ]
+
